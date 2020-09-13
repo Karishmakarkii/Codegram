@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/home', 'App\Http\Controllers\HomeController@index');
+Route::get('/profile/{user}', 'App\Http\Controllers\ProfilesController@index')->name('profile.show');
+Route::get('/p/create' ,'App\Http\Controllers\PostsController@create');
 
 Auth::routes();
 
