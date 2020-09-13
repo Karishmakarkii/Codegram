@@ -23,10 +23,15 @@ class PostsController extends Controller
            'image' => 'required|image'   //we can add as many as validation rules to  by using pipe notation '|'
        ])  ;  
 
+      $imagePath = request('image')->store('upload', 'public');
        //authenticated user
-       auth()->user()->posts()->create($data);
+       auth()->user()->posts()->create([
+           'caption' => $data['caption'],
+           'image' => $imagePath,
+
+       ]);
     //    \App\Models\Post::create($data); 
-           dd(request()->all());
+           return redirect('/profile/' . auth()->user()->id);
 
 
     }
