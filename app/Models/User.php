@@ -34,11 +34,20 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected static function boot(){
+        parent::boot();// method is called when we are booting of model
+        static::created(function ($user) {
+            $user->profile()->create([
+                'title' => $user ->username,
+            ]);
+            
+        });
+    }
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
     public function posts() {
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class)->orderBy('created_at', 'DESC'); //it order the image to display in descending order
     }
  
     public function profile() {
